@@ -1,0 +1,37 @@
+# Dart and Jaspr generated files
+.dart_tool/
+.packages
+build/
+coverage/
+doc/api/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Supabase local development state
+supabase/.branches/
+supabase/.temp/
+
+# IDE settings
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+

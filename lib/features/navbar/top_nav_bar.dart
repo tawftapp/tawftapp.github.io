@@ -1,0 +1,17 @@
+import 'package:jaspr/jaspr.dart';
+import 'package:jaspr/dom.dart';
+import '../../core/constants.dart';
+
+class TopNavBar extends StatelessComponent {
+  final String currentPath;
+  const TopNavBar({this.currentPath = '/', super.key});
+
+  @override
+  Component build(BuildContext context) {
+    return nav(classes: 'top-nav animate-reveal', [
+      div(classes: 'top-nav__container container-max', [
+        a(href: '/', classes: 'top-nav__logo', [Component.text(AppConstants.brandName)]),
+      ]),
+    ]);
+  }
+}
