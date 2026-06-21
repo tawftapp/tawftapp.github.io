@@ -23,20 +23,10 @@ class ShowcaseItem extends StatelessComponent {
       classes: 'showcase-item__code',
     );
 
-    return article(classes: 'showcase-item', [
-      header(classes: 'showcase-item__header', [
-        div(classes: 'showcase-item__eyebrow', [Component.text(item.category)]),
-        h3(classes: 'showcase-item__title', [Component.text(item.title)]),
-        p(classes: 'showcase-item__description', [
-          Component.text(item.description),
-        ]),
-      ]),
-      div(
-        classes:
-            'showcase-item__content ${isReversed ? 'showcase-item__content--reversed' : ''}',
-        isReversed ? [code, preview] : [preview, code],
-      ),
-    ]);
+    return div(
+      classes: 'showcase-item ${isReversed ? 'showcase-item--reversed' : ''}',
+      isReversed ? [code, preview] : [preview, code],
+    );
   }
 
   List<Component> _buildPreviewContent() {
