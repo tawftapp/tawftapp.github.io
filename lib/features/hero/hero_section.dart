@@ -11,7 +11,6 @@ class HeroSection extends StatelessComponent {
   Component build(BuildContext context) {
     return section(classes: 'hero-section container-max', [
       div(classes: 'hero-left animate-reveal reveal-delay-1', [
-        div(classes: 'hero-badge', [span(classes: 'hero-badge__dot', []), Component.text(AppConstants.versionBadge)]),
         h1(classes: 'hero-title', [
           Component.text('Find the perfect '),
           Component.element(tag: 'br'),
@@ -22,7 +21,9 @@ class HeroSection extends StatelessComponent {
         p(classes: 'hero-subtitle', [Component.text(AppConstants.tagline)]),
         const SearchBar(),
       ]),
-      div(classes: 'hero-right hide-mobile animate-reveal reveal-delay-2', [const Hero3dArea()]),
+      div(classes: 'hero-right hide-mobile animate-reveal reveal-delay-2', [
+        const Hero3dArea(),
+      ]),
     ]);
   }
 }
