@@ -5,10 +5,17 @@ import 'package:tawft/supabase_options.dart';
 // Run with: dart run bin/seed_db.dart
 void main() async {
   print('Initializing Supabase connection...');
-  final supabase = SupabaseClient(
-    SupabaseOptions.url,
-    SupabaseOptions.anonKey, // Use anon key or inject service role key securely via env vars for real production
-  );
+  final serviceRoleKey = Platform.environment['SUPABASE_SERVICE_ROLE_KEY'];
+  if (serviceRoleKey == null || serviceRoleKey.isEmpty) {
+    stderr.writeln(
+      'SUPABASE_SERVICE_ROLE_KEY is required for seeding. '
+      'Never put this key in browser code or commit it to source control.',
+    );
+    exitCode = 64;
+    return;
+  }
+
+  final supabase = SupabaseClient(SupabaseOptions.url, serviceRoleKey);
 
   print('Seeding demo categories...');
   final demoCategories = [
@@ -34,7 +41,8 @@ void main() async {
   final demoWidgets = [
     {
       'title': 'Glassmorphic Navigation',
-      'description': 'A beautiful, modern frosted glass navigation bar with subtle hover effects and smooth transitions.',
+      'description':
+          'A beautiful, modern frosted glass navigation bar with subtle hover effects and smooth transitions.',
       'category': 'Navigation',
       'tags': ['glassmorphism', 'nav', 'header'],
       'language': 'dart',
@@ -70,7 +78,8 @@ Container(
     },
     {
       'title': 'Neumorphic Button',
-      'description': 'Soft UI button with realistic shadows and press interactions.',
+      'description':
+          'Soft UI button with realistic shadows and press interactions.',
       'category': 'Buttons',
       'tags': ['neumorphism', 'button', 'interactive'],
       'language': 'dart',
@@ -98,11 +107,15 @@ Container(
 ''',
       'preview_file': 'buttons/neumorphic-btn.png',
       'featured': false,
-      'created_at': DateTime.now().subtract(const Duration(days: 1)).toUtc().toIso8601String(),
+      'created_at': DateTime.now()
+          .subtract(const Duration(days: 1))
+          .toUtc()
+          .toIso8601String(),
     },
     {
       'title': 'Skeleton Loader',
-      'description': 'Animated shimmer effect for loading states, perfect for content placeholders.',
+      'description':
+          'Animated shimmer effect for loading states, perfect for content placeholders.',
       'category': 'Feedback',
       'tags': ['loading', 'shimmer', 'skeleton'],
       'language': 'dart',
@@ -124,8 +137,11 @@ Shimmer.fromColors(
 ''',
       'preview_file': 'feedback/skeleton.gif',
       'featured': true,
-      'created_at': DateTime.now().subtract(const Duration(days: 2)).toUtc().toIso8601String(),
-    }
+      'created_at': DateTime.now()
+          .subtract(const Duration(days: 2))
+          .toUtc()
+          .toIso8601String(),
+    },
   ];
 
   try {
@@ -136,6 +152,6 @@ Shimmer.fromColors(
   } catch (e) {
     print('❌ Failed to seed widgets: $e');
   }
-  
+
   exit(0);
 }

@@ -1,23 +1,37 @@
 import 'package:jaspr_riverpod/jaspr_riverpod.dart';
 
-import 'package:jaspr/jaspr.dart' show kIsWeb;
 import '../services/supabase_service.dart';
 
 class CategoriesNotifier extends Notifier<List<String>> {
-  @override
-  List<String> build() {
-    if (kIsWeb) {
-      Future.microtask(() => _fetchCategories());
-    }
-    return ['All Components'];
-  }
+  static const fallbackCategories = [
+    'All Components',
+    'Navigation',
+    'Cards',
+    'Micro Interactions',
+    'Slivers & Scroll Effects',
+    'Buttons',
+    'Forms & Inputs',
+    'Chat & Messaging',
+  ];
 
-  Future<void> _fetchCategories() async {
+  @override
+  List<String> build() => ['All Components'];
+
+  Future<void> load() async {
     try {
       final dbCategories = await SupabaseService.fetchCategories();
-      state = ['All Components', ...dbCategories];
+      state = [
+        'All Components',
+        ...dbCategories
+            .map((category) => category.trim())
+            .map(
+              (category) =>
+                  category == 'Forms & Input' ? 'Forms & Inputs' : category,
+            )
+            .toSet(),
+      ];
     } catch (e) {
-      print('Failed to fetch categories: $e');
+      state = fallbackCategories;
     }
   }
 }
@@ -30,11 +44,14 @@ final categoriesProvider = NotifierProvider<CategoriesNotifier, List<String>>(
 class SelectedCategoryNotifier extends Notifier<String> {
   @override
   String build() => 'All Components';
-  
+
   void setCategory(String category) {
     state = category;
   }
 }
 
 /// Tracks the currently selected category.
-final selectedCategoryProvider = NotifierProvider<SelectedCategoryNotifier, String>(SelectedCategoryNotifier.new);
+final selectedCategoryProvider =
+    NotifierProvider<SelectedCategoryNotifier, String>(
+      SelectedCategoryNotifier.new,
+    );

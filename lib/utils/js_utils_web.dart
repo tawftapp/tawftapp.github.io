@@ -6,41 +6,27 @@ void highlightCode(String elementId) {
   try {
     html.window.requestAnimationFrame((_) {
       try {
-        js.context.callMethod('eval', [
-          '''
-          if (typeof Prism !== "undefined") { 
-            var el = document.getElementById("$elementId");
-            if (el) {
-              Prism.highlightElement(el);
-            }
-          }
-          '''
-        ]);
+        final prism = js.context['Prism'];
+        final element = html.document.getElementById(elementId);
+        if (prism != null && element != null) {
+          prism.callMethod('highlightElement', [element]);
+        }
       } catch (_) {}
     });
   } catch (_) {
-    // Fallback if requestAnimationFrame fails
     try {
-      js.context.callMethod('eval', [
-        '''
-        if (typeof Prism !== "undefined") { 
-          var el = document.getElementById("$elementId");
-          if (el) {
-            Prism.highlightElement(el);
-          }
-        }
-        '''
-      ]);
+      final prism = js.context['Prism'];
+      final element = html.document.getElementById(elementId);
+      if (prism != null && element != null) {
+        prism.callMethod('highlightElement', [element]);
+      }
     } catch (_) {}
   }
 }
 
 void copyToClipboard(String text) {
   try {
-    js.context['__copy_temp_text'] = text;
-    js.context.callMethod('eval', [
-      'if (navigator.clipboard) { navigator.clipboard.writeText(window.__copy_temp_text); }'
-    ]);
+    final clipboard = js.context['navigator']['clipboard'];
+    clipboard?.callMethod('writeText', [text]);
   } catch (_) {}
 }
-

@@ -31,35 +31,50 @@ class ShowcaseItem extends StatelessComponent {
 
   List<Component> _buildPreviewContent() {
     final url = StorageService.getPreviewUrl(item.previewFile);
-    final isVideo = item.previewFile.toLowerCase().endsWith('.mp4') || 
-                    item.previewFile.toLowerCase().endsWith('.webm');
+    final isVideo = StorageService.isVideo(item.previewFile);
+
+    if (url == null) {
+      return [
+        div(classes: 'widget-preview__unavailable', [
+          span(
+            classes:
+                'material-symbols-outlined widget-preview__unavailable-icon',
+            [Component.text('broken_image')],
+          ),
+          Component.text('Preview unavailable'),
+        ]),
+      ];
+    }
 
     if (isVideo) {
-      final videoId = 'vid-\${url.hashCode}';
       return [
-        RawText('''
-          <video 
-            id="$videoId" 
-            class="widget-preview__img" 
-            src="$url" 
-            autoplay 
-            loop 
-            muted 
-            playsinline 
-            oncanplay="this.muted=true; this.play();"
-          ></video>
-        ''')
+        video(
+          [],
+          src: url,
+          classes: 'widget-preview__img',
+          autoplay: true,
+          loop: true,
+          muted: true,
+          preload: Preload.metadata,
+          attributes: {
+            'playsinline': '',
+            'aria-label': '${item.title} preview',
+          },
+        ),
       ];
     }
 
     return [
       img(
-        src: url, 
+        src: url,
         classes: 'widget-preview__img',
-        attributes: {'loading': 'lazy'},
+        attributes: {
+          'loading': 'lazy',
+          'decoding': 'async',
+          'referrerpolicy': 'no-referrer',
+        },
         alt: item.title,
-      )
+      ),
     ];
   }
 }
-

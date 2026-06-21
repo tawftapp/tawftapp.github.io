@@ -10,7 +10,7 @@ class TopNavBar extends StatelessComponent {
   Component build(BuildContext context) {
     return nav(classes: 'top-nav animate-reveal', [
       div(classes: 'top-nav__container container-max', [
-        a(href: '/', classes: 'top-nav__logo', [Component.text(AppConstants.brandName)]),
+        a(href: './', classes: 'top-nav__logo', [Component.text(AppConstants.brandName)]),
       ]),
     ]);
   }
