@@ -20,7 +20,7 @@ class _SearchBarState extends State<SearchBar> {
 
   void _updateQuery(BuildContext context, String value) {
     final sanitizedValue = value
-        .replaceAll(RegExp(r'[^a-zA-Z0-9\s&+\-]'), '')
+        .replaceAll(RegExp(r'[^a-zA-Z\s]'), '')
         .replaceAll(RegExp(r'\s+'), ' ');
 
     setState(() => _value = sanitizedValue);
@@ -65,6 +65,8 @@ class _SearchBarState extends State<SearchBar> {
             'autocomplete': 'off',
             'spellcheck': 'false',
             'maxlength': '80',
+            'pattern': '[A-Za-z ]*',
+            'title': 'Use letters and spaces only',
           },
         ),
         if (_value.isNotEmpty)
