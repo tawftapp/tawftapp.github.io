@@ -53,9 +53,10 @@ class ShowcaseItem extends StatelessComponent {
           src: url,
           classes: 'widget-preview__img',
           autoplay: true,
+          controls: true,
           loop: true,
           muted: true,
-          preload: Preload.metadata,
+          preload: Preload.auto,
           attributes: {
             'playsinline': '',
             'aria-label': '${item.title} preview',
