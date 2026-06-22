@@ -9,7 +9,6 @@ abstract class AppConstants {
       'Immersive UI components. Live previews. '
       'Production-ready code. Engineered for modern applications.';
   static const String heroTitle = 'Find the perfect Flutter widget instantly.';
-  static const String versionBadge = 'v2.0 is live. Material 3 ready.';
   static const String copyright =
       '© 2024 There\'s A Widget For That. Built for Flutter developers.';
 
