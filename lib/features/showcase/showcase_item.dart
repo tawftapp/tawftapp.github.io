@@ -5,31 +5,48 @@ import '../../components/code_preview.dart';
 import '../../components/widget_preview.dart';
 import '../../services/storage_service.dart';
 
-class ShowcaseItem extends StatelessComponent {
+class ShowcaseItem extends StatefulComponent {
   final WidgetShowcaseItem item;
   final bool isReversed;
 
   const ShowcaseItem({required this.item, this.isReversed = false, super.key});
 
   @override
+  State<ShowcaseItem> createState() => _ShowcaseItemState();
+}
+
+class _ShowcaseItemState extends State<ShowcaseItem> {
+  bool _isCodeExpanded = false;
+
+  void _toggleCode() {
+    setState(() => _isCodeExpanded = !_isCodeExpanded);
+  }
+
+  @override
   Component build(BuildContext context) {
+    final isVideo = StorageService.isVideo(component.item.previewFile);
     final preview = WidgetPreview(
       classes: 'showcase-item__preview',
       children: _buildPreviewContent(),
     );
     final code = CodePreview(
-      title: item.title,
-      rawCode: item.rawCode,
+      title: component.item.title,
+      rawCode: component.item.rawCode,
       classes: 'showcase-item__code',
     );
 
     return div(
-      classes: 'showcase-item ${isReversed ? 'showcase-item--reversed' : ''}',
-      isReversed ? [code, preview] : [preview, code],
+      classes:
+          'showcase-item '
+          '${component.isReversed ? 'showcase-item--reversed ' : ''}'
+          '${isVideo ? 'showcase-item--mobile-code-toggle ' : ''}'
+          '${_isCodeExpanded ? 'showcase-item--code-expanded' : ''}',
+      component.isReversed ? [code, preview] : [preview, code],
     );
   }
 
   List<Component> _buildPreviewContent() {
+    final item = component.item;
     final url = StorageService.getPreviewUrl(item.previewFile);
     final isVideo = StorageService.isVideo(item.previewFile);
 
@@ -67,6 +84,34 @@ class ShowcaseItem extends StatelessComponent {
               Component.text(item.title),
             ]),
           ]),
+          button(
+            classes:
+                'widget-preview__code-toggle '
+                '${_isCodeExpanded ? 'widget-preview__code-toggle--expanded' : ''}',
+            type: ButtonType.button,
+            attributes: {
+              'aria-label': _isCodeExpanded
+                  ? 'Collapse code for ${item.title}'
+                  : 'Expand code for ${item.title}',
+              'aria-expanded': _isCodeExpanded.toString(),
+            },
+            onClick: _toggleCode,
+            [
+              span(
+                classes: 'material-symbols-outlined widget-preview__code-icon',
+                [Component.text('code')],
+              ),
+              span(
+                classes:
+                    'material-symbols-outlined widget-preview__code-chevron',
+                [
+                  Component.text(
+                    _isCodeExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down',
+                  ),
+                ],
+              ),
+            ],
+          ),
         ]),
       ];
     }
