@@ -81,11 +81,7 @@ class _SearchBarState extends State<SearchBar> {
                 [Component.text('close')],
               ),
             ],
-          )
-        else
-          div(classes: 'search-bar__badge hide-mobile', [
-            span(classes: 'search-bar__shortcut', [Component.text('Live')]),
-          ]),
+          ),
       ]),
     ]);
   }

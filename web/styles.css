@@ -175,8 +175,6 @@ body {
 .search-bar__icon { font-size: 20px; color: rgba(189,200,210,0.6); margin-left: 12px; margin-right: 8px; }
 .search-bar__input { background: transparent; border: none; outline: none; width: 100%; color: #fff; font-family: 'Inter', sans-serif; font-size: 14px; padding: 10px 0; }
 .search-bar__input::placeholder { color: rgba(189,200,210,0.4); }
-.search-bar__badge { display: flex; align-items: center; gap: 4px; margin-right: 8px; padding: 4px 8px; border-radius: 6px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); }
-.search-bar__shortcut { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: #bdc8d2; }
 .search-bar__input::-webkit-search-cancel-button { display: none; }
 .search-bar__clear {
   width: 30px;
