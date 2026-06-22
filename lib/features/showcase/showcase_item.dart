@@ -48,19 +48,26 @@ class ShowcaseItem extends StatelessComponent {
 
     if (isVideo) {
       return [
-        video(
-          [],
-          src: url,
-          classes: 'widget-preview__img',
-          autoplay: true,
-          loop: true,
-          muted: true,
-          preload: Preload.metadata,
-          attributes: {
-            'playsinline': '',
-            'aria-label': '${item.title} preview',
-          },
-        ),
+        div(classes: 'widget-preview__video-wrap', [
+          video(
+            [],
+            src: url,
+            classes: 'widget-preview__img',
+            autoplay: true,
+            loop: true,
+            muted: true,
+            preload: Preload.metadata,
+            attributes: {
+              'playsinline': '',
+              'aria-label': '${item.title} preview',
+            },
+          ),
+          div(classes: 'widget-preview__video-overlay', [
+            span(classes: 'widget-preview__video-title', [
+              Component.text(item.title),
+            ]),
+          ]),
+        ]),
       ];
     }
 
