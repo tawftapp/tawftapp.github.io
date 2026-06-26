@@ -1,6 +1,5 @@
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr/dom.dart';
-import '../../core/constants.dart';
 
 class TopNavBar extends StatelessComponent {
   final String currentPath;
