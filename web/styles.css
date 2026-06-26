@@ -671,13 +671,10 @@ body {
    FOOTER
    ═══════════════════════════════════════════════════════════════ */
 .app-footer { background: transparent; width: 100%; padding: 24px 0; border-top: 1px solid rgba(255,255,255,0.03); position: relative; z-index: 10; margin-top: 16px; }
-.app-footer__container { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 0 40px; }
+.app-footer__container { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 0 40px; text-align: center; }
 .app-footer__brand { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .app-footer__logo { font-family: 'Geist', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.04em; color: rgba(255,255,255,0.8); }
 .app-footer__copyright { font-family: 'Inter', sans-serif; font-size: 11px; color: rgba(189,200,210,0.5); }
-.app-footer__links { display: flex; align-items: center; gap: 20px; }
-.app-footer__link { font-family: 'Inter', sans-serif; font-size: 12px; color: rgba(189,200,210,0.6); text-decoration: none; transition: color 0.3s ease; }
-.app-footer__link:hover { color: rgba(255,255,255,0.9); }
 
 /* ─── App Main ──────────────────────────────────────────────── */
 .app-main { flex-grow: 1; display: flex; flex-direction: column; align-items: center; width: 100%; padding-top: 64px; }
@@ -880,8 +877,7 @@ body {
 }
 @media (min-width: 768px) {
   .showcase-section { padding: 32px 40px; }
-  .app-footer__container { flex-direction: row; justify-content: space-between; }
-  .app-footer__brand { align-items: flex-start; }
+  .app-footer__brand { align-items: center; }
 }
 @media (min-width: 1024px) {
   .hero-section { flex-direction: row; gap: 0; padding: 0 40px; }
