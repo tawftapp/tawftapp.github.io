@@ -73,7 +73,7 @@ class _ShowcaseItemState extends State<ShowcaseItem> {
             autoplay: true,
             loop: true,
             muted: true,
-            preload: Preload.metadata,
+            preload: Preload.auto,
             attributes: {
               'playsinline': '',
               'aria-label': '${item.title} preview',

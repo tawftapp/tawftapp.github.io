@@ -460,10 +460,12 @@ body {
 /* ─── Widget Preview ────────────────────────────────────────── */
 /* ─── Widget Preview ────────────────────────────────────────── */
 .widget-preview { position: relative; border-radius: 12px; overflow: hidden; background: #0e0e0e; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 40px rgba(0,0,0,0.3); height: 460px; display: flex; align-items: center; justify-content: center; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease; }
+.widget-preview::before, .code-editor-wrapper::before { content: ''; position: absolute; inset: 0; z-index: 0; background: linear-gradient(110deg, rgba(255,255,255,0.025) 8%, rgba(137,206,255,0.075) 18%, rgba(255,255,255,0.025) 33%), radial-gradient(circle at 35% 35%, rgba(137,206,255,0.08), transparent 32%), #0b0b0d; background-size: 220% 100%, 100% 100%, 100% 100%; animation: preview-skeleton-shimmer 1.45s ease-in-out infinite; }
+.widget-preview::after, .code-editor-wrapper::after { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(circle at 50% 35%, transparent 0, transparent 42%, rgba(0,0,0,0.18) 100%); }
 .widget-preview:hover { transform: translateY(-2px) scale(1.005); border-color: rgba(255,255,255,0.1); box-shadow: 0 12px 40px -10px rgba(0,0,0,0.6), 0 0 30px rgba(255,255,255,0.02); }
-.widget-preview__glow { position: absolute; inset: 0; background: linear-gradient(to bottom right, rgba(137,206,255,0.05), transparent); opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
+.widget-preview__glow { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to bottom right, rgba(137,206,255,0.05), transparent); opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
 .widget-preview:hover .widget-preview__glow { opacity: 1; }
-.widget-preview__dots { position: absolute; inset: 0; pointer-events: none; }
+.widget-preview__dots { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 .widget-preview__content { position: relative; z-index: 10; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
 .widget-preview__img { max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: contain; border-radius: 12px; }
 .widget-preview__video-wrap { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 12px; }
@@ -472,6 +474,11 @@ body {
 .widget-preview__code-toggle { display: none; }
 .widget-preview__unavailable { display: flex; flex-direction: column; align-items: center; gap: 8px; color: rgba(189,200,210,0.55); font-family: 'Inter', sans-serif; font-size: 12px; }
 .widget-preview__unavailable-icon { font-size: 28px; color: rgba(189,200,210,0.35); }
+
+@keyframes preview-skeleton-shimmer {
+  0% { background-position: 160% 0, 0 0, 0 0; }
+  100% { background-position: -60% 0, 0 0, 0 0; }
+}
 
 /* ─── Premium Code Editor Preview ────────────────────────────── */
 .code-editor-wrapper {
@@ -503,6 +510,8 @@ body {
 }
 
 .code-editor-container {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -582,7 +591,9 @@ body {
   overflow: hidden;
   position: relative;
   display: flex;
-  background: #08080a;
+  background: linear-gradient(110deg, rgba(255,255,255,0.018) 8%, rgba(137,206,255,0.055) 18%, rgba(255,255,255,0.018) 33%), #08080a;
+  background-size: 220% 100%, 100% 100%;
+  animation: preview-skeleton-shimmer 1.45s ease-in-out infinite;
 }
 
 .code-editor-pre {
