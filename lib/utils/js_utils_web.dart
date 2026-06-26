@@ -3,25 +3,24 @@ import 'dart:js' as js;
 import 'dart:html' as html;
 
 void highlightCode(String elementId) {
-  void highlightWithRetry(int attemptsLeft) {
+  try {
+    html.window.requestAnimationFrame((_) {
+      try {
+        final prism = js.context['Prism'];
+        final element = html.document.getElementById(elementId);
+        if (prism != null && element != null) {
+          prism.callMethod('highlightElement', [element]);
+        }
+      } catch (_) {}
+    });
+  } catch (_) {
     try {
       final prism = js.context['Prism'];
       final element = html.document.getElementById(elementId);
       if (prism != null && element != null) {
         prism.callMethod('highlightElement', [element]);
-        return;
       }
     } catch (_) {}
-
-    if (attemptsLeft > 0) {
-      html.window.setTimeout(() => highlightWithRetry(attemptsLeft - 1), 120);
-    }
-  }
-
-  try {
-    html.window.requestAnimationFrame((_) => highlightWithRetry(8));
-  } catch (_) {
-    highlightWithRetry(8);
   }
 }
 
@@ -49,15 +48,9 @@ void enablePreviewVideoPlayback() {
     silenceVideo(video);
     video
       ..autoplay = true
-      ..loop = true
-      ..preload = 'auto';
+      ..loop = true;
     video.setAttribute('playsinline', '');
     video.setAttribute('preload', 'auto');
-    if (video.networkState == html.MediaElement.NETWORK_EMPTY) {
-      try {
-        video.load();
-      } catch (_) {}
-    }
     video.play().catchError((_) {});
   }
 
