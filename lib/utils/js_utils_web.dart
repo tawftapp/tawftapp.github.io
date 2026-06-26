@@ -88,7 +88,7 @@ void enablePreviewVideoPlayback() {
       image.onLoad.listen((_) => markPreviewLoaded(image));
       image.onError.listen((_) => markPreviewLoaded(image));
     }
-    if (image.complete && image.naturalWidth != 0) {
+    if (image.naturalWidth != 0) {
       markPreviewLoaded(image);
     }
   }
