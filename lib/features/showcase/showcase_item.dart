@@ -17,16 +17,33 @@ class ShowcaseItem extends StatefulComponent {
 
 class _ShowcaseItemState extends State<ShowcaseItem> {
   bool _isCodeExpanded = false;
+  bool _isPreviewLoaded = false;
+
+  @override
+  void didUpdateComponent(ShowcaseItem oldComponent) {
+    super.didUpdateComponent(oldComponent);
+    if (oldComponent.item.previewFile != component.item.previewFile) {
+      _isPreviewLoaded = false;
+    }
+  }
 
   void _toggleCode() {
     setState(() => _isCodeExpanded = !_isCodeExpanded);
+  }
+
+  void _markPreviewLoaded() {
+    if (!_isPreviewLoaded) {
+      setState(() => _isPreviewLoaded = true);
+    }
   }
 
   @override
   Component build(BuildContext context) {
     final isVideo = StorageService.isVideo(component.item.previewFile);
     final preview = WidgetPreview(
-      classes: 'showcase-item__preview',
+      classes:
+          'showcase-item__preview '
+          '${_isPreviewLoaded ? 'widget-preview--loaded' : ''}',
       children: _buildPreviewContent(),
     );
     final code = CodePreview(
@@ -78,6 +95,12 @@ class _ShowcaseItemState extends State<ShowcaseItem> {
               'playsinline': '',
               'aria-label': '${item.title} preview',
             },
+            events: {
+              'canplay': (_) => _markPreviewLoaded(),
+              'loadeddata': (_) => _markPreviewLoaded(),
+              'playing': (_) => _markPreviewLoaded(),
+              'error': (_) => _markPreviewLoaded(),
+            },
           ),
           div(classes: 'widget-preview__video-overlay', [
             span(classes: 'widget-preview__video-title', [
@@ -124,6 +147,10 @@ class _ShowcaseItemState extends State<ShowcaseItem> {
           'loading': 'lazy',
           'decoding': 'async',
           'referrerpolicy': 'no-referrer',
+        },
+        events: {
+          'load': (_) => _markPreviewLoaded(),
+          'error': (_) => _markPreviewLoaded(),
         },
         alt: item.title,
       ),
