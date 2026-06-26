@@ -140,7 +140,7 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 .top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(19,19,19,0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.03); }
 .top-nav__container { display: flex; justify-content: center; align-items: center; height: 56px; padding: 0 40px; }
-.top-nav__logo { font-family: 'Geist', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.04em; color: #fff; text-decoration: none; }
+.top-nav__logo { font-family: 'Geist', sans-serif; font-size: clamp(14px, 4vw, 20px); font-weight: 700; letter-spacing: -0.04em; color: #fff; text-decoration: none; text-align: center; white-space: nowrap; }
 .top-nav__links { display: flex; align-items: center; gap: 24px; }
 .top-nav__link { font-family: 'Inter', sans-serif; font-size: 13px; color: #bdc8d2; text-decoration: none; transition: color 0.3s ease; }
 .top-nav__link:hover { color: #fff; }
