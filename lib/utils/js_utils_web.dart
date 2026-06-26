@@ -34,6 +34,11 @@ void copyToClipboard(String text) {
 void enablePreviewVideoPlayback() {
   const selector = 'video';
   const boundAttribute = 'data-preview-playback-bound';
+  const imageBoundAttribute = 'data-preview-image-bound';
+
+  void markPreviewLoaded(html.Element element) {
+    element.closest('.widget-preview')?.classes.add('widget-preview--loaded');
+  }
 
   void silenceVideo(html.VideoElement video) {
     video
@@ -50,7 +55,6 @@ void enablePreviewVideoPlayback() {
       ..autoplay = true
       ..loop = true;
     video.setAttribute('playsinline', '');
-    video.setAttribute('preload', 'auto');
     video.play().catchError((_) {});
   }
 
@@ -58,7 +62,9 @@ void enablePreviewVideoPlayback() {
     if (!video.hasAttribute(boundAttribute)) {
       video.setAttribute(boundAttribute, '');
       video.onCanPlay.listen((_) => playVideo(video));
+      video.onLoadedData.listen((_) => markPreviewLoaded(video));
       video.onLoadedMetadata.listen((_) => playVideo(video));
+      video.onError.listen((_) => markPreviewLoaded(video));
       video.onPlay.listen((_) => silenceVideo(video));
       video.onVolumeChange.listen((_) {
         if (!video.muted || video.volume != 0) {
@@ -70,7 +76,21 @@ void enablePreviewVideoPlayback() {
         playVideo(video);
       });
     }
+    if (video.readyState >= 2) {
+      markPreviewLoaded(video);
+    }
     playVideo(video);
+  }
+
+  void bindImage(html.ImageElement image) {
+    if (!image.hasAttribute(imageBoundAttribute)) {
+      image.setAttribute(imageBoundAttribute, '');
+      image.onLoad.listen((_) => markPreviewLoaded(image));
+      image.onError.listen((_) => markPreviewLoaded(image));
+    }
+    if (image.complete && image.naturalWidth != 0) {
+      markPreviewLoaded(image);
+    }
   }
 
   void bindAllVideos() {
@@ -81,9 +101,23 @@ void enablePreviewVideoPlayback() {
     }
   }
 
-  bindAllVideos();
+  void bindAllPreviewImages() {
+    for (final element
+        in html.document.querySelectorAll('img.widget-preview__img')) {
+      if (element is html.ImageElement) {
+        bindImage(element);
+      }
+    }
+  }
 
-  html.MutationObserver((_, __) => bindAllVideos()).observe(
+  void bindAllPreviewMedia() {
+    bindAllVideos();
+    bindAllPreviewImages();
+  }
+
+  bindAllPreviewMedia();
+
+  html.MutationObserver((_, __) => bindAllPreviewMedia()).observe(
     html.document.documentElement!,
     childList: true,
     subtree: true,
@@ -91,7 +125,7 @@ void enablePreviewVideoPlayback() {
 
   html.document.onVisibilityChange.listen((_) {
     if (!html.document.hidden!) {
-      bindAllVideos();
+      bindAllPreviewMedia();
     }
   });
 }
