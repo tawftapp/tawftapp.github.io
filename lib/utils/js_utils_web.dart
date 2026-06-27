@@ -35,6 +35,7 @@ void enablePreviewVideoPlayback() {
   const selector = 'video';
   const boundAttribute = 'data-preview-playback-bound';
   const imageBoundAttribute = 'data-preview-image-bound';
+  html.IntersectionObserver? videoObserver;
 
   void markPreviewLoaded(html.Element element) {
     element.closest('.widget-preview')?.classes.add('widget-preview--loaded');
@@ -58,6 +59,13 @@ void enablePreviewVideoPlayback() {
     video.play().catchError((_) {});
   }
 
+  void pauseVideo(html.VideoElement video) {
+    silenceVideo(video);
+    try {
+      video.pause();
+    } catch (_) {}
+  }
+
   void bindVideo(html.VideoElement video) {
     if (!video.hasAttribute(boundAttribute)) {
       video.setAttribute(boundAttribute, '');
@@ -75,11 +83,20 @@ void enablePreviewVideoPlayback() {
         video.currentTime = 0;
         playVideo(video);
       });
+      videoObserver?.observe(video);
     }
     if (video.readyState >= 2) {
       markPreviewLoaded(video);
     }
-    playVideo(video);
+    final rect = video.getBoundingClientRect();
+    final viewportHeight = html.window.innerHeight ?? 0;
+    final isNearViewport =
+        rect.bottom >= -240 && rect.top <= viewportHeight + 240;
+    if (isNearViewport) {
+      playVideo(video);
+    } else {
+      pauseVideo(video);
+    }
   }
 
   void bindImage(html.ImageElement image) {
@@ -114,6 +131,23 @@ void enablePreviewVideoPlayback() {
     bindAllVideos();
     bindAllPreviewImages();
   }
+
+  videoObserver = html.IntersectionObserver((entries, _) {
+    for (final entry in entries) {
+      if (entry is html.IntersectionObserverEntry &&
+          entry.target is html.VideoElement) {
+        final video = entry.target as html.VideoElement;
+        if (entry.isIntersecting == true) {
+          playVideo(video);
+        } else {
+          pauseVideo(video);
+        }
+      }
+    }
+  }, {
+    'rootMargin': '240px 0px',
+    'threshold': 0.01,
+  });
 
   bindAllPreviewMedia();
 

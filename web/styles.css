@@ -130,16 +130,13 @@ body {
 /* ═══════════════════════════════════════════════════════════════
    AMBIENT BACKGROUND
    ═══════════════════════════════════════════════════════════════ */
-.ambient-bg-container { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-.ambient-mesh { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
-.ambient-mesh--primary { top: -10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle at center, rgba(137,206,255,0.05), #131313, transparent); filter: blur(100px); }
-.ambient-mesh--secondary { bottom: -10%; right: -5%; width: 60vw; height: 60vw; background: radial-gradient(circle at center, rgba(220,184,255,0.05), #131313, transparent); filter: blur(100px); }
-.ambient-particle { position: absolute; width: 6px; height: 6px; border-radius: 50%; filter: blur(1px); }
+.ambient-bg-container { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; background: #131313; }
+.ambient-mesh, .ambient-particle { display: none; }
 
 /* ═══════════════════════════════════════════════════════════════
    TOP NAVIGATION
    ═══════════════════════════════════════════════════════════════ */
-.top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: rgba(19,19,19,0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.03); }
+.top-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: #131313; border-bottom: 1px solid rgba(255,255,255,0.03); }
 .top-nav__container { display: flex; justify-content: center; align-items: center; height: 56px; padding: 0 40px; }
 .top-nav__logo { font-family: 'Geist', sans-serif; font-size: clamp(14px, 4vw, 20px); font-weight: 700; letter-spacing: -0.04em; color: #fff; text-decoration: none; text-align: center; white-space: nowrap; }
 .top-nav__links { display: flex; align-items: center; gap: 24px; }
