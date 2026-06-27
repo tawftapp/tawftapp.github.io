@@ -118,7 +118,8 @@ body {
 /* ═══════════════════════════════════════════════════════════════
    SPLASH OVERLAY
    ═══════════════════════════════════════════════════════════════ */
-.splash-overlay { position: fixed; inset: 0; background: #131313; z-index: 100; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.splash-overlay { position: fixed; inset: 0; background: #131313; z-index: 100; display: flex; align-items: center; justify-content: center; pointer-events: none; opacity: 1; visibility: visible; transition: opacity 0.6s cubic-bezier(0.8, 0, 0.2, 1), visibility 0.6s cubic-bezier(0.8, 0, 0.2, 1); }
+.splash-overlay--hidden { opacity: 0; visibility: hidden; }
 .splash-overlay__inner { position: relative; display: flex; flex-direction: column; align-items: center; }
 .splash-overlay__glow { position: absolute; inset: -80px; background: linear-gradient(to right, rgba(137,206,255,0.2), rgba(220,184,255,0.1), rgba(255,184,106,0.2)); filter: blur(60px); opacity: 0.4; }
 .splash-overlay__logo { font-family: 'Geist', sans-serif; font-size: clamp(64px, 12vw, 96px); font-weight: 700; letter-spacing: -0.05em; line-height: 1.05; color: #fff; position: relative; z-index: 10; text-align: center; }

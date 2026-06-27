@@ -144,8 +144,9 @@ class _ShowcaseItemState extends State<ShowcaseItem> {
         src: url,
         classes: 'widget-preview__img',
         attributes: {
-          'loading': 'lazy',
+          'loading': 'eager',
           'decoding': 'async',
+          'fetchpriority': 'high',
           'referrerpolicy': 'no-referrer',
         },
         events: {

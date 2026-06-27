@@ -2,11 +2,16 @@ import 'package:jaspr/jaspr.dart';
 import 'package:jaspr/dom.dart';
 
 class SplashOverlay extends StatelessComponent {
-  const SplashOverlay({super.key});
+  final bool isHidden;
+
+  const SplashOverlay({this.isHidden = false, super.key});
 
   @override
   Component build(BuildContext context) {
-    return div(classes: 'splash-overlay animate-splash', [
+    return div(
+      classes:
+          'splash-overlay ${isHidden ? 'splash-overlay--hidden' : ''}',
+      [
       div(classes: 'splash-overlay__inner', [
         div(classes: 'splash-overlay__glow animate-pulse-glow', []),
         h1(classes: 'splash-overlay__logo', [Component.text('TAWFT.')]),
