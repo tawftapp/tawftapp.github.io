@@ -457,6 +457,7 @@ body {
 
 /* ─── Showcase Item ─────────────────────────────────────────── */
 .showcase-item { display: flex; flex-direction: column; gap: 20px; align-items: stretch; }
+.showcase-item-wrap { animation: reveal 0.28s ease-out forwards; }
 
 /* ─── Widget Preview ────────────────────────────────────────── */
 /* ─── Widget Preview ────────────────────────────────────────── */

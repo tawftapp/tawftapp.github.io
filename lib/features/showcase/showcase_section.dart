@@ -43,7 +43,7 @@ class _ShowcaseSectionState extends State<ShowcaseSection> {
     final filteredWidgets = context.watch(filteredWidgetsProvider);
 
     return section(classes: 'showcase-section container-max', [
-      div(classes: 'animate-reveal reveal-delay-3', [
+      div(classes: 'showcase-section__header', [
         const SectionHeading(title: 'Curated Components'),
         div(classes: 'showcase-chips', [
           if (categories.length == 1) // Only 'All Components' is loaded
@@ -75,7 +75,7 @@ class _ShowcaseSectionState extends State<ShowcaseSection> {
         _buildEmptyState(selectedCategory, searchQuery)
       else ...[
         for (var i = 0; i < filteredWidgets.length; i++)
-          div(classes: 'animate-reveal reveal-delay-${4 + (i % 4)}', [
+          div(classes: 'showcase-item-wrap', [
             ShowcaseItem(item: filteredWidgets[i], isReversed: i.isOdd),
           ]),
 
