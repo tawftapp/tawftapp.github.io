@@ -10,8 +10,6 @@ class WidgetPreview extends StatelessComponent {
   @override
   Component build(BuildContext context) {
     return div(classes: 'widget-preview $classes', [
-      div(classes: 'widget-preview__glow', []),
-      div(classes: 'widget-preview__dots dot-grid', []),
       div(classes: 'widget-preview__content', children),
     ]);
   }
