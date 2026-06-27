@@ -17,6 +17,24 @@ class ShowcaseSection extends StatefulComponent {
 
 class _ShowcaseSectionState extends State<ShowcaseSection> {
   bool _startedLoading = false;
+  String? _lastRequestedCategory;
+  String? _lastRequestedSearchQuery;
+
+  void _queueInitialFetch(String category, String searchQuery) {
+    if (!kIsWeb ||
+        (_lastRequestedCategory == category &&
+            _lastRequestedSearchQuery == searchQuery)) {
+      return;
+    }
+
+    _lastRequestedCategory = category;
+    _lastRequestedSearchQuery = searchQuery;
+
+    Future.microtask(() {
+      if (!mounted) return;
+      context.read(paginationProvider.notifier).fetchInitial();
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -26,8 +44,11 @@ class _ShowcaseSectionState extends State<ShowcaseSection> {
       Future.microtask(() {
         if (!mounted) return;
         context.read(categoriesProvider.notifier).load();
-        context.read(paginationProvider.notifier).fetchInitial();
       });
+      _queueInitialFetch(
+        context.read(selectedCategoryProvider),
+        context.read(searchQueryProvider).trim(),
+      );
     }
   }
 
@@ -36,6 +57,7 @@ class _ShowcaseSectionState extends State<ShowcaseSection> {
     final categories = context.watch(categoriesProvider);
     final selectedCategory = context.watch(selectedCategoryProvider);
     final searchQuery = context.watch(searchQueryProvider).trim();
+    _queueInitialFetch(selectedCategory, searchQuery);
 
     // Watch the pagination state directly
     final paginationState = context.watch(paginationProvider);
