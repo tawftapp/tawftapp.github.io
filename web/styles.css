@@ -457,14 +457,13 @@ body {
 
 /* ─── Showcase Item ─────────────────────────────────────────── */
 .showcase-item { display: flex; flex-direction: column; gap: 20px; align-items: stretch; }
-.showcase-item-wrap { animation: reveal 0.28s ease-out forwards; }
+.showcase-item-wrap { display: block; }
 
 /* ─── Widget Preview ────────────────────────────────────────── */
 /* ─── Widget Preview ────────────────────────────────────────── */
 .widget-preview { position: relative; border-radius: 12px; overflow: hidden; background: #0b0b0b; border: 1px solid rgba(255,255,255,0.05); height: 460px; display: flex; align-items: center; justify-content: center; }
 .widget-preview__content { position: relative; z-index: 10; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-.widget-preview__img { max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: contain; border-radius: 12px; opacity: 0; transition: opacity 0.15s ease; }
-.widget-preview--loaded .widget-preview__img { opacity: 1; }
+.widget-preview__img { max-width: 100%; max-height: 100%; width: 100%; height: 100%; object-fit: contain; border-radius: 12px; opacity: 1; }
 .widget-preview__video-wrap { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 12px; }
 .widget-preview__video-overlay { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; display: flex; align-items: flex-end; min-height: 96px; padding: 36px 22px 18px; background: linear-gradient(to top, rgba(5,5,6,0.94) 0%, rgba(5,5,6,0.68) 45%, transparent 100%); pointer-events: none; opacity: 0; transition: opacity 0.25s ease; }
 .widget-preview--loaded .widget-preview__video-overlay { opacity: 1; }
@@ -477,29 +476,16 @@ body {
 .code-editor-wrapper {
   position: relative;
   border-radius: 12px;
-  border: 1px solid transparent;
-  background-image: linear-gradient(#08080a, #08080a), linear-gradient(120deg, rgba(137,206,255,0.15) 0%, rgba(220,184,255,0.15) 50%, rgba(137,206,255,0.15) 100%);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  background-size: 100% 100%, 200% 200%;
-  animation: border-shimmer 8s linear infinite;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #08080a;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   height: 460px;
 }
 
-@keyframes border-shimmer {
-  0% { background-position: 0% 0%, 0% 50%; }
-  50% { background-position: 0% 0%, 100% 50%; }
-  100% { background-position: 0% 0%, 0% 50%; }
-}
-
 .code-editor-wrapper:hover {
-  transform: translateY(-2px) scale(1.005);
-  background-image: linear-gradient(#08080a, #08080a), linear-gradient(120deg, #89ceff 0%, #dcb8ff 50%, #89ceff 100%);
-  box-shadow: 0 12px 40px -10px rgba(0, 0, 0, 0.6), 0 0 30px 0 rgba(137, 206, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .code-editor-container {
