@@ -22,11 +22,13 @@ class _AppState extends State<App> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 2400), () {
-      if (mounted) {
-        setState(() => _minimumSplashElapsed = true);
-      }
-    });
+    if (kIsWeb) {
+      Future.delayed(const Duration(milliseconds: 2400), () {
+        if (mounted) {
+          setState(() => _minimumSplashElapsed = true);
+        }
+      });
+    }
   }
 
   @override
@@ -38,11 +40,7 @@ class _AppState extends State<App> {
     final canDismissSplash =
         !kIsWeb || (_minimumSplashElapsed && isFirstPageReady);
     if (canDismissSplash && !_isSplashDismissed) {
-      Future.microtask(() {
-        if (mounted) {
-          setState(() => _isSplashDismissed = true);
-        }
-      });
+      _isSplashDismissed = true;
     }
     final hideSplash = _isSplashDismissed || canDismissSplash;
 
